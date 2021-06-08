@@ -7,176 +7,199 @@ const client = redis.createClient(6379, 'localhost');
 
 
 function keys(pattern){
-    client.keys(pattern, function(err, res){
-        if(err){
-            console.log('Error', err);
-            return;
-        }
-        console.dir(res)
-    });
+  client.keys(pattern, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.dir(res)
+  });
 }
 
 function del(key) {
-	client.del(key, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res);
-	})
+  client.del(key, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res);
+  })
 }
 
 function hmset(key, hashObj){
-    client.hmset(key, hashObj, function(err, res){
-        if(err){
-            console.log('Error', err);
-            return;
-        }
-        console.dir(res)
-    });
+  client.hmset(key, hashObj, function(err, res){
+    console.log('hmset: ');
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.dir(res)
+  });
 }
 
 function hmget(key, fields){
-    client.hmget(key, fields, function(err, res){
-        if(err){
-            console.log('Error', err);
-            return;
-        }
-        if(!res){
-        	console.log(null);
-		}
-		console.log(res);
-    });
-}
-
-function hgetAll(key) {
-    client.hgetall(key, function(err, res){
-        if(err){
-            console.log('Error', err);
-            return;
-        }
-        console.dir(res);
-    });
+  client.hmget(key, fields, function(err, res){
+    console.log('hmget: ');
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    if(!res){
+      console.log(null);
+    }
+    console.log(res);
+  });
 }
 
 function hlen(key) {
-	client.hlen(key, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res);
-	});
+  client.hlen(key, function(err, res){
+    console.log('hlen: ');
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res);
+  });
 }
 
 function hgetall(key) {
-	client.hgetall(key, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
+  client.hgetall(key, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log('hgetall: ');
+    for(let k in res){
+      console.log('key-value', k, typeof k, res[k], typeof res[k]);
+    }
 
-		for(let k in res){
-			console.log('key-value', k, typeof k, res[k], typeof res[k]);
-		}
-
-		console.log(res);
-	});
+  });
 }
 
 function hdel(key, fields){
-	client.hdel(key, fields, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		if(!res){
-			console.log(null);
-		}
-		console.log(res);
-	})
+  client.hdel(key, fields, function(err, res){
+    console.log('hdel: ');
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    if(!res){
+      console.log(null);
+    }
+    console.log(res);
+  })
 }
 
 function time(){
-	client.time(function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.dir(res);
-		console.log(Array.isArray(res))
-		console.log(Array.isArray(res[0]))
-	});
+  client.time(function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.dir(res);
+    console.log(Array.isArray(res))
+    console.log(Array.isArray(res[0]))
+  });
+}
+
+function sadd(args) {
+  client.sadd(args, function(err, res) {
+    if (err) {
+      console.log('Error', err);
+      return;
+    }
+    console.log('sadd: ', res, typeof res);
+  })
+}
+
+function scard(args) {
+  client.scard(args, function(err, res) {
+    if (err) {
+      console.log('Error', err);
+      return;
+    }
+    console.log('scard: ', res, typeof res);
+  })
+}
+
+function smembers(args) {
+  client.smembers(args, function(err, res) {
+    if (err) {
+      console.log('Error', err);
+      return;
+    }
+    console.log('smembers: ', res, typeof res, ', isArray: ', Array.isArray(res));
+  })
 }
 
 function zadd(args){
-	client.zadd(args, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res);
-	})
+  client.zadd(args, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res);
+  })
 }
 
 function zrevrangebyscore(args){
-	client.zrevrangebyscore(args, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res)
-	})
+  client.zrevrangebyscore(args, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res)
+  })
 }
 
 function zrangebyscore(args){
-	client.zrangebyscore(args, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res)
-	})
+  client.zrangebyscore(args, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res)
+  })
 }
 
 function zremrangebyscore(args){
-	client.zremrangebyscore(args, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res)
-	})
+  client.zremrangebyscore(args, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res)
+  })
 }
 
 function rpush(args){
-	client.rpush(args, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res);
-	});
+  client.rpush(args, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res);
+  });
 }
 
 function lrange(args){
-	client.lrange(args, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res);
-	});
+  client.lrange(args, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res);
+  });
 }
 
 function ltrim(args){
-	client.ltrim(args, function(err, res){
-		if(err){
-			console.log('Error', err);
-			return;
-		}
-		console.log(res);
-	});
+  client.ltrim(args, function(err, res){
+    if(err){
+      console.log('Error', err);
+      return;
+    }
+    console.log(res);
+  });
 }
 
 // hmset('joe-test', {a:'ac', b:'bd'});
@@ -230,72 +253,84 @@ function ltrim(args){
 
 let testHash = true;
 if(testHash){
-	hlen('hash');
+  hlen('hash');
 
-	hmset('hash', {
-		1:'1',
-		2:'2',
-		3:'3',
-		4:'4',
-		5:'5',
-		6:'6',
-		7:'7',
-		8:'8',
-		9:'9'
-	});
+  hmset('hash', {
+    1:1,
+    2:20,
+    3:'3',
+    4:'4',
+    5:'5',
+    6:'6',
+    7:'7',
+    8:'8',
+    9:'9'
+  });
 
-	hlen('hash');
+  hlen('hash');
 
-	hmget('hash', [1,2,3,4,5,6,7,8,9]);
+  hmget('hash', [1,2,3,4,5,6,7,8,9]);
 
-	hlen('hash');
-	hgetall('hash');
+  hlen('hash');
+  hgetall('hash');
 
-	hdel('hash', [1,2,3,4,5,6,7,8,9]);	//9
+  hdel('hash', [1,2,3,4,5,6,7,8,9]);	//9
 
-	hlen('hash');	//0
-	hgetall('hash');	//null
+  hlen('hash');	//0
+  hmget('hash', [1,2,3,4,5,6,7,8,9]);
 
-	// del('hash');
+
+  hgetall('hash');	//null
+
+  // del('hash');
 }
 
-let testZset = false
+let testSet = false;
+if (testSet) {
+  sadd(['joe-test-set','1','2','3']);
+  scard('joe-test-set');
+  smembers('joe-test-set');
+  smembers('joe-test-set1');
+}
+
+
+let testZset = false;
 if(testZset){
-	del('testkey');
+  del('testkey');
 
-	let arg1 = ['testkey',1840, '1550131918264-7-778', 1840, '1550117100771-1-1849', 1840, '1550117121847,10-62489'];
-	zadd(arg1);
+  let arg1 = ['testkey',1840, '1550131918264-7-778', 1840, '1550117100771-1-1849', 1840, '1550117121847,10-62489'];
+  zadd(arg1);
 
-	let args2 = [ 'testkey', 1840, 1840, 'WITHSCORES', 'LIMIT', 0, 2 ];
-	zrevrangebyscore(args2);
+  let args2 = [ 'testkey', 1840, 1840, 'WITHSCORES', 'LIMIT', 0, 2 ];
+  zrevrangebyscore(args2);
 
-	args2 = [ 'testkey', 1840, 1840, 'LIMIT', 0, 3 ];
-	zrevrangebyscore(args2);
+  args2 = [ 'testkey', 1840, 1840, 'LIMIT', 0, 3 ];
+  zrevrangebyscore(args2);
 
-	zrangebyscore(args2);
+  zrangebyscore(args2);
 
 
-	let args3 = ['testkey', 1840.0, 1840.0]
-	zremrangebyscore(args3);
+  let args3 = ['testkey', 1840.0, 1840.0]
+  zremrangebyscore(args3);
 
-	zrangebyscore(args2);
+  zrangebyscore(args2);
 }
 
 let testList = false;
 if(testList){
-	ltrim(['list',10000, 10001]);
+  ltrim(['list',10000, 10001]);
 
-	let arg1 = ['list',1,2,3,4,5,6,7];
-	rpush(arg1);
-	rpush(arg1);
-	rpush(arg1);
+  let arg1 = ['list',1,2,3,4,5,6,7];
+  rpush(arg1);
+  rpush(arg1);
+  rpush(arg1);
 
-	let arg2 = ['list', 0, 9];
-	lrange(arg2);
+  let arg2 = ['list', 0, 9];
+  lrange(arg2);
 
-	let arg3 = ['list', 10, 10000];
-	ltrim(arg3);
+  let arg3 = ['list', 10, 10000];
+  ltrim(arg3);
 
-	let arg4 = ['list', 0, 10];
-	lrange(arg4);
+  let arg4 = ['list', 0, 10];
+  lrange(arg4);
 }
